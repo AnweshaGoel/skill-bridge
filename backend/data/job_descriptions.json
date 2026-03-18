@@ -1,0 +1,154 @@
+[
+  {
+    "role": "Cloud Engineer",
+    "company": "Acme Corp",
+    "level": "entry",
+    "description": "We are looking for an entry-level Cloud Engineer to join our infrastructure team. You will help design, build, and maintain our cloud-native systems on AWS and GCP. You'll work closely with senior engineers to automate infrastructure, improve reliability, and reduce operational toil. This role is ideal for a recent graduate who is enthusiastic about cloud, infrastructure-as-code, and modern DevOps practices.",
+    "required_skills": [
+      "AWS",
+      "GCP",
+      "Kubernetes",
+      "Docker",
+      "Terraform",
+      "Linux",
+      "Networking",
+      "CI/CD",
+      "Python",
+      "Git"
+    ],
+    "nice_to_have": [
+      "Ansible",
+      "Prometheus",
+      "Grafana",
+      "Go",
+      "AWS certifications"
+    ]
+  },
+  {
+    "role": "Backend Engineer",
+    "company": "Acme Corp",
+    "level": "entry",
+    "description": "Join our backend engineering team to build and scale the APIs and services that power our product. You'll work across the full backend stack: designing data models, writing business logic, optimising queries, and ensuring our services are reliable and performant. We value clean code, strong testing habits, and a curiosity for distributed systems.",
+    "required_skills": [
+      "Python",
+      "REST APIs",
+      "SQL",
+      "Docker",
+      "Git",
+      "Linux",
+      "CI/CD"
+    ],
+    "nice_to_have": [
+      "FastAPI",
+      "Django",
+      "PostgreSQL",
+      "Redis",
+      "AWS",
+      "Kubernetes",
+      "gRPC",
+      "message queues"
+    ]
+  },
+  {
+    "role": "Frontend Engineer",
+    "company": "Acme Corp",
+    "level": "entry",
+    "description": "We are hiring a Frontend Engineer to build beautiful, accessible, and performant user interfaces for our web product. You'll work closely with designers and backend engineers to deliver features end-to-end. Strong JavaScript and React fundamentals are essential. Experience with TypeScript and testing frameworks is a significant plus.",
+    "required_skills": [
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "CSS",
+      "Git",
+      "REST APIs"
+    ],
+    "nice_to_have": [
+      "Vite",
+      "Tailwind CSS",
+      "Jest",
+      "Vitest",
+      "Storybook",
+      "accessibility (WCAG)",
+      "performance optimisation",
+      "CI/CD"
+    ]
+  },
+  {
+    "role": "Data Engineer",
+    "company": "Acme Corp",
+    "level": "mid",
+    "description": "We are looking for a Data Engineer to design and maintain the pipelines that move and transform data across our organisation. You'll build reliable ETL workflows, manage data warehouse schemas, and collaborate with data scientists and analysts to ensure clean, timely data. Experience with cloud data platforms and orchestration tools is required.",
+    "required_skills": [
+      "Python",
+      "SQL",
+      "AWS",
+      "Docker",
+      "Git",
+      "CI/CD",
+      "Linux"
+    ],
+    "nice_to_have": [
+      "Apache Spark",
+      "Airflow",
+      "dbt",
+      "Snowflake",
+      "Kafka",
+      "Terraform",
+      "GCP BigQuery",
+      "Kubernetes"
+    ]
+  },
+  {
+    "role": "DevOps Engineer",
+    "company": "Acme Corp",
+    "level": "entry",
+    "description": "We need a DevOps Engineer to accelerate our software delivery and maintain the health of our production systems. You'll own CI/CD pipelines, manage container orchestration on Kubernetes, and implement infrastructure-as-code. You'll be the bridge between development and operations — ensuring fast, safe deployments and high uptime.",
+    "required_skills": [
+      "Docker",
+      "Kubernetes",
+      "CI/CD",
+      "Linux",
+      "AWS",
+      "Terraform",
+      "Git",
+      "Networking",
+      "Python"
+    ],
+    "nice_to_have": [
+      "Ansible",
+      "Helm",
+      "ArgoCD",
+      "Prometheus",
+      "Grafana",
+      "ELK stack",
+      "GCP",
+      "Bash scripting"
+    ]
+  },
+  {
+    "role": "ML Engineer",
+    "company": "Acme Corp",
+    "level": "entry",
+    "description": "We are building out our ML platform team and need an ML Engineer who can take models from research to production. You'll work alongside data scientists to deploy, monitor, and scale machine learning models. Strong Python skills and familiarity with both ML frameworks and production engineering practices are required.",
+    "required_skills": [
+      "Python",
+      "Machine Learning",
+      "Docker",
+      "REST APIs",
+      "Git",
+      "SQL",
+      "Linux",
+      "CI/CD"
+    ],
+    "nice_to_have": [
+      "PyTorch",
+      "TensorFlow",
+      "Kubernetes",
+      "AWS SageMaker",
+      "MLflow",
+      "feature stores",
+      "Terraform",
+      "distributed training"
+    ]
+  }
+]

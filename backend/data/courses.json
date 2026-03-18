@@ -1,0 +1,272 @@
+[
+  {
+    "id": "course_001",
+    "title": "Responsive Web Design",
+    "platform": "freeCodeCamp",
+    "url": "https://www.freecodecamp.org/learn/2022/responsive-web-design/",
+    "duration_hours": 40,
+    "cost": "Free",
+    "skills_taught": ["HTML5", "CSS3", "Responsive Design", "Flexbox", "CSS Grid", "Accessibility"]
+  },
+  {
+    "id": "course_002",
+    "title": "JavaScript Algorithms and Data Structures",
+    "platform": "freeCodeCamp",
+    "url": "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/",
+    "duration_hours": 50,
+    "cost": "Free",
+    "skills_taught": ["JavaScript", "ES6+", "Data Structures", "Algorithms", "OOP", "Functional Programming"]
+  },
+  {
+    "id": "course_003",
+    "title": "Front End Development Libraries",
+    "platform": "freeCodeCamp",
+    "url": "https://www.freecodecamp.org/learn/front-end-development-libraries/",
+    "duration_hours": 30,
+    "cost": "Free",
+    "skills_taught": ["React", "Redux", "Bootstrap", "Sass", "jQuery"]
+  },
+  {
+    "id": "course_004",
+    "title": "The Odin Project — Full Stack JavaScript",
+    "platform": "The Odin Project",
+    "url": "https://www.theodinproject.com/paths/full-stack-javascript",
+    "duration_hours": 120,
+    "cost": "Free",
+    "skills_taught": ["JavaScript", "React", "Node.js", "Express", "PostgreSQL", "Git", "HTML5", "CSS3", "REST APIs"]
+  },
+  {
+    "id": "course_005",
+    "title": "CS50x — Introduction to Computer Science",
+    "platform": "edX / Harvard OpenCourseWare",
+    "url": "https://cs50.harvard.edu/x/",
+    "duration_hours": 100,
+    "cost": "Free",
+    "skills_taught": ["C", "Python", "SQL", "JavaScript", "HTML/CSS", "Data Structures", "Algorithms", "Web Development"]
+  },
+  {
+    "id": "course_006",
+    "title": "CS50P — Introduction to Programming with Python",
+    "platform": "edX / Harvard OpenCourseWare",
+    "url": "https://cs50.harvard.edu/python/",
+    "duration_hours": 50,
+    "cost": "Free",
+    "skills_taught": ["Python", "Object-Oriented Programming", "File I/O", "Testing", "Regular Expressions", "APIs"]
+  },
+  {
+    "id": "course_007",
+    "title": "AWS Cloud Practitioner Essentials",
+    "platform": "AWS Training (free tier)",
+    "url": "https://aws.amazon.com/training/learn-about/cloud-practitioner/",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["AWS", "Cloud Fundamentals", "EC2", "S3", "IAM", "VPC", "Pricing Models"]
+  },
+  {
+    "id": "course_008",
+    "title": "AWS Solutions Architect — Associate (Exam Prep)",
+    "platform": "AWS Training (free tier)",
+    "url": "https://aws.amazon.com/training/learn-about/architect/",
+    "duration_hours": 20,
+    "cost": "Free",
+    "skills_taught": ["AWS", "EC2", "S3", "RDS", "VPC", "IAM", "Load Balancing", "Auto Scaling", "Networking"]
+  },
+  {
+    "id": "course_009",
+    "title": "Google Cloud Fundamentals: Core Infrastructure",
+    "platform": "Google Cloud Skills Boost",
+    "url": "https://www.cloudskillsboost.google/course_templates/60",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["GCP", "Compute Engine", "Cloud Storage", "IAM", "Cloud Networking", "Kubernetes Engine"]
+  },
+  {
+    "id": "course_010",
+    "title": "Architecting with Google Kubernetes Engine",
+    "platform": "Google Cloud Skills Boost",
+    "url": "https://www.cloudskillsboost.google/paths/15",
+    "duration_hours": 30,
+    "cost": "Free",
+    "skills_taught": ["Kubernetes", "GCP", "GKE", "Containers", "Docker", "Workloads", "Networking", "Storage"]
+  },
+  {
+    "id": "course_011",
+    "title": "Kubernetes — Official Interactive Tutorial",
+    "platform": "Kubernetes.io",
+    "url": "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Kubernetes", "Pods", "Deployments", "Services", "Scaling", "Rolling Updates"]
+  },
+  {
+    "id": "course_012",
+    "title": "Docker Official Getting Started Tutorial",
+    "platform": "Docker Docs",
+    "url": "https://docs.docker.com/get-started/",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Docker", "Containers", "Images", "Dockerfile", "Docker Compose", "Volumes", "Networking"]
+  },
+  {
+    "id": "course_013",
+    "title": "Practical Deep Learning for Coders",
+    "platform": "fast.ai",
+    "url": "https://course.fast.ai/",
+    "duration_hours": 30,
+    "cost": "Free",
+    "skills_taught": ["Machine Learning", "Deep Learning", "PyTorch", "Computer Vision", "NLP", "Tabular Data", "Deployment"]
+  },
+  {
+    "id": "course_014",
+    "title": "Introduction to Machine Learning",
+    "platform": "MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/6-867-machine-learning-fall-2006/",
+    "duration_hours": 60,
+    "cost": "Free",
+    "skills_taught": ["Machine Learning", "Supervised Learning", "Neural Networks", "SVM", "Probabilistic Models", "Python"]
+  },
+  {
+    "id": "course_015",
+    "title": "6.006 Introduction to Algorithms",
+    "platform": "MIT OpenCourseWare",
+    "url": "https://ocw.mit.edu/courses/6-006-introduction-to-algorithms-spring-2020/",
+    "duration_hours": 80,
+    "cost": "Free",
+    "skills_taught": ["Algorithms", "Data Structures", "Dynamic Programming", "Graph Algorithms", "Sorting", "Hashing"]
+  },
+  {
+    "id": "course_016",
+    "title": "Get Started with Terraform",
+    "platform": "HashiCorp Learn",
+    "url": "https://developer.hashicorp.com/terraform/tutorials/aws-get-started",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Terraform", "Infrastructure as Code", "AWS", "HCL", "State Management", "Modules"]
+  },
+  {
+    "id": "course_017",
+    "title": "GitHub Actions Documentation & Quickstart",
+    "platform": "GitHub Docs",
+    "url": "https://docs.github.com/en/actions/quickstart",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["CI/CD", "GitHub Actions", "YAML", "Automated Testing", "Build Automation", "Deployment Pipelines"]
+  },
+  {
+    "id": "course_018",
+    "title": "Linux Command Line Basics",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=ZtqBQ68cfJc",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Linux", "Bash", "Shell Scripting", "File System", "Permissions", "Processes", "Networking Tools"]
+  },
+  {
+    "id": "course_019",
+    "title": "TypeScript Full Course for Beginners",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=30LWjhZzg50",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["TypeScript", "Type Annotations", "Generics", "Interfaces", "Enums", "Utility Types", "React with TypeScript"]
+  },
+  {
+    "id": "course_020",
+    "title": "SQL for Data Science",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=HXV3zeQKqGY",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["SQL", "SELECT", "JOIN", "GROUP BY", "Subqueries", "Window Functions", "Indexes"]
+  },
+  {
+    "id": "course_021",
+    "title": "Machine Learning Specialization",
+    "platform": "Coursera (Andrew Ng)",
+    "url": "https://www.coursera.org/specializations/machine-learning-introduction",
+    "duration_hours": 90,
+    "cost": "$49/month",
+    "skills_taught": ["Machine Learning", "Supervised Learning", "Unsupervised Learning", "Neural Networks", "Python", "scikit-learn", "TensorFlow"]
+  },
+  {
+    "id": "course_022",
+    "title": "Docker & Kubernetes: The Complete Guide",
+    "platform": "Udemy",
+    "url": "https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/",
+    "duration_hours": 22,
+    "cost": "$15",
+    "skills_taught": ["Docker", "Kubernetes", "Docker Compose", "CI/CD", "AWS ECS", "Helm", "Ingress", "Persistent Volumes"]
+  },
+  {
+    "id": "course_023",
+    "title": "React — The Complete Guide (Hooks, Redux, TypeScript)",
+    "platform": "Udemy",
+    "url": "https://www.udemy.com/course/react-the-complete-guide-incl-redux/",
+    "duration_hours": 68,
+    "cost": "$15",
+    "skills_taught": ["React", "TypeScript", "Redux", "React Router", "Custom Hooks", "Context API", "Testing", "Next.js basics"]
+  },
+  {
+    "id": "course_024",
+    "title": "Python for Everybody Specialization",
+    "platform": "Coursera (University of Michigan)",
+    "url": "https://www.coursera.org/specializations/python",
+    "duration_hours": 80,
+    "cost": "$49/month",
+    "skills_taught": ["Python", "Data Structures", "Web Scraping", "Databases", "SQL", "REST APIs", "Data Visualisation"]
+  },
+  {
+    "id": "course_025",
+    "title": "FastAPI — Full Course",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=0sOvCWFmrtA",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Python", "FastAPI", "REST APIs", "Pydantic", "SQLAlchemy", "JWT Auth", "Async Python"]
+  },
+  {
+    "id": "course_026",
+    "title": "Networking Fundamentals",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=qiQR5rTSshw",
+    "duration_hours": 12,
+    "cost": "Free",
+    "skills_taught": ["Networking", "TCP/IP", "DNS", "HTTP/HTTPS", "Subnetting", "Routing", "Firewalls", "Load Balancers"]
+  },
+  {
+    "id": "course_027",
+    "title": "MLOps Specialization",
+    "platform": "Coursera (deeplearning.ai)",
+    "url": "https://www.coursera.org/specializations/machine-learning-engineering-for-production-mlops",
+    "duration_hours": 80,
+    "cost": "$49/month",
+    "skills_taught": ["Machine Learning", "MLflow", "Docker", "Kubernetes", "CI/CD", "Feature Engineering", "Model Monitoring", "REST APIs"]
+  },
+  {
+    "id": "course_028",
+    "title": "Git and GitHub Full Course",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=apGV9Kg7ics",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Git", "GitHub", "Branching", "Merging", "Pull Requests", "Rebasing", "Conflict Resolution"]
+  },
+  {
+    "id": "course_029",
+    "title": "Terraform on AWS — Full Course",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=iRaai1IBlB0",
+    "duration_hours": 7,
+    "cost": "Free",
+    "skills_taught": ["Terraform", "AWS", "Infrastructure as Code", "VPC", "EC2", "S3", "RDS", "Modules", "State Backend"]
+  },
+  {
+    "id": "course_030",
+    "title": "PostgreSQL Full Course",
+    "platform": "freeCodeCamp (YouTube)",
+    "url": "https://www.youtube.com/watch?v=qw--VYLpxG4",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["SQL", "PostgreSQL", "Indexes", "Transactions", "Stored Procedures", "Performance Tuning", "Joins", "Window Functions"]
+  }
+]
