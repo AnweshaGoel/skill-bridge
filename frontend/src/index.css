@@ -1,0 +1,76 @@
+/* Design tokens — "Technical Editorial" aesthetic */
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+:root {
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f2f1ed;
+  --bg-card: #ffffff;
+  --bg-accent: #0f172a;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --border: #e2e0da;
+  --border-strong: #c4c1b8;
+
+  --color-present: #16a34a;
+  --color-present-bg: #f0fdf4;
+  --color-missing: #dc2626;
+  --color-missing-bg: #fef2f2;
+  --color-partial: #d97706;
+  --color-partial-bg: #fffbeb;
+  --color-fallback: #7c3aed;
+  --color-fallback-bg: #f5f3ff;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+  --bg-primary: #0b0f19;
+  --bg-secondary: #111827;
+  --bg-card: #1a2234;
+  --bg-accent: #f1f0ec;
+  --text-primary: #f1f0ec;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #1e293b;
+  --border-strong: #334155;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color var(--transition), color var(--transition);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "DM Serif Display", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+code,
+pre,
+.mono {
+  font-family: "JetBrains Mono", monospace;
+}
