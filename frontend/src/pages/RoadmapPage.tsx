@@ -88,6 +88,9 @@ export default function RoadmapPage() {
     if (!state?.targetRole || called.current) return;
     called.current = true;
 
+    // If user came via "Mock Interview" CTA, don't auto-generate the roadmap
+    if (state.scrollToInterview) return;
+
     // Try to restore cached roadmap first
     try {
       const cached = localStorage.getItem(`roadmap-data-${state.targetRole}`);
@@ -99,8 +102,6 @@ export default function RoadmapPage() {
     } catch {
       loadRoadmap();
     }
-
-    // Interview is loaded on demand — not automatically
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-trigger interview if navigated from the "Mock Interview" CTA
@@ -246,6 +247,17 @@ export default function RoadmapPage() {
               </div>
             </div>
           </Card>
+        )}
+
+        {!roadmap && !roadmapLoading && !roadmapError && (
+          <div className="border border-[var(--border)] rounded-[var(--radius-lg)] px-6 py-8 text-center">
+            <p className="text-sm text-[var(--text-secondary)] mb-5">
+              Generate a prioritised learning plan for your missing skills.
+            </p>
+            <Button size="lg" onClick={loadRoadmap}>
+              Generate Roadmap
+            </Button>
+          </div>
         )}
 
         {roadmap && !roadmapLoading && (
