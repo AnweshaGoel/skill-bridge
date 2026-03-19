@@ -2,12 +2,14 @@ import json
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
+from limiter import limiter
 from models.schemas import ResumeParseResponse, Skill
 from services.fallback import extract_skills_fallback
 from services.gemini import call_with_fallback
 from services.pdf_parser import extract_text_from_pdf
+from services.sanitize import sanitize_text
 
 router = APIRouter(prefix="/api/resume", tags=["resume"])
 
@@ -42,7 +44,9 @@ Resume:
 
 
 @router.post("/parse", response_model=ResumeParseResponse)
+@limiter.limit("10/minute")
 async def parse_resume(
+    request: Request,
     file: Optional[UploadFile] = File(default=None),
     text: Optional[str] = Form(default=None),
 ):
@@ -62,7 +66,7 @@ async def parse_resume(
     if len(resume_text) < 50:
         raise HTTPException(status_code=422, detail="Resume text is too short (minimum 50 characters).")
 
-    resume_text = resume_text[:8000]  # cap to prevent prompt abuse
+    resume_text = sanitize_text(resume_text, max_length=8000)
 
     prompt = _PARSE_PROMPT.format(resume_text=resume_text)
     result, used_fallback = call_with_fallback(
@@ -78,7 +82,8 @@ async def parse_resume(
 
 
 @router.get("/samples")
-async def list_samples():
+@limiter.limit("30/minute")
+async def list_samples(request: Request):
     """Return sample resume metadata for demo mode."""
     resumes = json.loads((_DATA_DIR / "sample_resumes.json").read_text(encoding="utf-8"))
     return [

@@ -1,8 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
+from limiter import limiter
 from models.schemas import GapAnalysisRequest, GapAnalysisResponse
 from services.fallback import gap_analysis_fallback
 from services.gemini import call_with_fallback
+from services.sanitize import sanitize_text
 
 router = APIRouter(prefix="/api/analysis", tags=["analysis"])
 
@@ -46,22 +48,25 @@ Resume:
 
 
 @router.post("/gap", response_model=GapAnalysisResponse)
-async def gap_analysis(req: GapAnalysisRequest):
+@limiter.limit("10/minute")
+async def gap_analysis(request: Request, req: GapAnalysisRequest):
     """Compare resume skills against a target role and return a scored gap analysis."""
+    resume_text = sanitize_text(req.resume_text, max_length=8000)
+    target_role = sanitize_text(req.target_role, max_length=100)
     prompt = _GAP_PROMPT.format(
-        target_role=req.target_role,
+        target_role=target_role,
         experience_level=req.experience_level,
-        resume_text=req.resume_text,
+        resume_text=resume_text,
     )
     result, used_fallback = call_with_fallback(
         primary="pro",
         secondary="flash",
         prompt=prompt,
         rule_fallback_fn=gap_analysis_fallback,
-        resume_text=req.resume_text,
-        target_role=req.target_role,
+        resume_text=resume_text,
+        target_role=target_role,
     )
 
     result.pop("used_fallback", None)
-    result["target_role"] = req.target_role  # router owns this field; AI doesn't need to echo it
+    result["target_role"] = target_role  # router owns this field; AI doesn't need to echo it
     return GapAnalysisResponse(**result, used_fallback=used_fallback)

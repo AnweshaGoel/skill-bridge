@@ -1,8 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
+from limiter import limiter
 from models.schemas import InterviewRequest, InterviewResponse
 from services.fallback import interview_fallback
 from services.gemini import call_with_fallback
+from services.sanitize import sanitize_text
 
 router = APIRouter(prefix="/api/interview", tags=["interview"])
 
@@ -80,21 +82,25 @@ Use "technical" for role-specific knowledge questions (not only engineering).
 
 
 @router.post("/questions", response_model=InterviewResponse)
-async def get_questions(req: InterviewRequest):
+@limiter.limit("10/minute")
+async def get_questions(request: Request, req: InterviewRequest):
     """Generate targeted mock interview questions adapted to the role type."""
-    prompt_template = _TECHNICAL_PROMPT if _is_technical(req.target_role) else _GENERAL_PROMPT
+    target_role = sanitize_text(req.target_role, max_length=100)
+    missing_skills = [sanitize_text(s, max_length=60) for s in req.missing_skills]
+
+    prompt_template = _TECHNICAL_PROMPT if _is_technical(target_role) else _GENERAL_PROMPT
     prompt = prompt_template.format(
         experience_level=req.experience_level,
-        target_role=req.target_role,
-        missing_skills=", ".join(req.missing_skills) if req.missing_skills else "general role skills",
+        target_role=target_role,
+        missing_skills=", ".join(missing_skills) if missing_skills else "general role skills",
     )
     result, used_fallback = call_with_fallback(
         primary="flash",
         secondary="lite",
         prompt=prompt,
         rule_fallback_fn=interview_fallback,
-        target_role=req.target_role,
-        missing_skills=req.missing_skills,
+        target_role=target_role,
+        missing_skills=missing_skills,
     )
 
     result.pop("used_fallback", None)

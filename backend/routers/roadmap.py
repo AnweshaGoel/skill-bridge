@@ -1,8 +1,10 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 
+from limiter import limiter
 from models.schemas import RoadmapRequest, RoadmapResponse
 from services.fallback import roadmap_fallback
 from services.gemini import call_with_fallback
+from services.sanitize import sanitize_text
 
 router = APIRouter(prefix="/api/roadmap", tags=["roadmap"])
 
@@ -54,7 +56,8 @@ Rules:
 
 
 @router.post("/generate", response_model=RoadmapResponse)
-async def generate_roadmap(req: RoadmapRequest):
+@limiter.limit("10/minute")
+async def generate_roadmap(request: Request, req: RoadmapRequest):
     """Generate a personalised week-by-week learning roadmap."""
     if not req.missing_skills:
         return RoadmapResponse(
@@ -64,18 +67,22 @@ async def generate_roadmap(req: RoadmapRequest):
             used_fallback=False,
         )
 
+    target_role = sanitize_text(req.target_role, max_length=100)
+    # Sanitize each skill name (max 60 chars each)
+    missing_skills = [sanitize_text(s, max_length=60) for s in req.missing_skills]
+
     prompt = _ROADMAP_PROMPT.format(
-        target_role=req.target_role,
+        target_role=target_role,
         hours_per_week=req.available_hours_per_week,
-        missing_skills=", ".join(req.missing_skills),
+        missing_skills=", ".join(missing_skills),
     )
     result, used_fallback = call_with_fallback(
         primary="flash",
         secondary="lite",
         prompt=prompt,
         rule_fallback_fn=roadmap_fallback,
-        target_role=req.target_role,
-        missing_skills=req.missing_skills,
+        target_role=target_role,
+        missing_skills=missing_skills,
     )
 
     result.pop("used_fallback", None)
