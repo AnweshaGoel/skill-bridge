@@ -54,7 +54,6 @@ export const api = {
     target_role: string;
     missing_skills: string[];
     available_hours_per_week?: number;
-    budget?: string;
   }): Promise<RoadmapResponse> {
     return post<RoadmapResponse>("/api/roadmap/generate", payload);
   },

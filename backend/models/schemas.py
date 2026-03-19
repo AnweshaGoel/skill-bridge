@@ -75,15 +75,6 @@ class RoadmapRequest(BaseModel):
     target_role: str = Field(..., min_length=2, max_length=100)
     missing_skills: List[str] = Field(..., min_length=0)
     available_hours_per_week: int = Field(default=10, ge=1, le=80)
-    budget: str = Field(default="free")  # "free" | "paid"
-
-    @field_validator("budget")
-    @classmethod
-    def validate_budget(cls, v: str) -> str:
-        allowed = {"free", "paid"}
-        if v not in allowed:
-            raise ValueError(f"budget must be one of {allowed}")
-        return v
 
     @field_validator("missing_skills")
     @classmethod

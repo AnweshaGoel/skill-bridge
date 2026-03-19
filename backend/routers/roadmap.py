@@ -12,7 +12,6 @@ to help someone become a {target_role}.
 
 Constraints:
 - Available hours per week: {hours_per_week}
-- Budget: {budget} (free = only free resources; paid = paid courses acceptable)
 - Skills to address: {missing_skills}
 
 For each resource include the best real course or resource title and its platform \
@@ -68,7 +67,6 @@ async def generate_roadmap(req: RoadmapRequest):
     prompt = _ROADMAP_PROMPT.format(
         target_role=req.target_role,
         hours_per_week=req.available_hours_per_week,
-        budget=req.budget,
         missing_skills=", ".join(req.missing_skills),
     )
     result, used_fallback = call_with_fallback(
