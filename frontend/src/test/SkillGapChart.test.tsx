@@ -4,7 +4,7 @@ import { SkillGapChart } from "../components/SkillGapChart";
 import type { SkillGap } from "../types";
 
 // Recharts uses ResizeObserver internally; stub it for jsdom
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
+window.ResizeObserver = vi.fn().mockImplementation(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
   disconnect: vi.fn(),
