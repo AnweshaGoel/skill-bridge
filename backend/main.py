@@ -22,6 +22,7 @@ app.add_middleware(
         "http://localhost:3000",
         "https://*.vercel.app",
         "https://*.onrender.com",
+        "https://skill-bridge-ui.onrender.com",
     ],
     allow_credentials=True,
     allow_methods=["*"],
