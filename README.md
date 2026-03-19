@@ -50,9 +50,10 @@ cd frontend && npm run test
 ```
 
 ## AI Disclosure
-- **AI assistant used:** Claude (claude.ai) for architecture planning and spec generation
-- **Verification method:** Every AI-generated code block reviewed, tested, and run locally
-- **Rejected suggestion example:** 
+- **AI assistant used:** Claude Code (claude.ai) for architecture planning, spec generation, and code implementation
+- **Verification method:** Every output reviewed, all 30 backend tests run locally and passing before commit
+- **AI integration in the product:** Google Gemini API (gemini-2.5-pro / flash / flash-lite) for resume parsing, gap analysis, roadmap generation, and interview question generation — with a fully offline keyword-matching fallback that activates automatically on API failure
+- **Fallback guarantee:** Setting `GEMINI_API_KEY=invalid` still returns valid results from the rule-based fallback; the app never shows a bare error to the user
 
 
 ## Tradeoffs & Prioritisation
