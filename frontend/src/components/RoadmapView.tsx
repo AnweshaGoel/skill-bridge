@@ -1,7 +1,22 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, ExternalLink, CheckCircle2, Circle } from "lucide-react";
+import { ChevronDown, ExternalLink, CheckCircle2, Circle, Search } from "lucide-react";
 import clsx from "clsx";
+
+function searchUrl(title: string, platform: string): string {
+  const p = platform.toLowerCase();
+  const q = encodeURIComponent(title);
+  if (p.includes("youtube") || p.includes("freecodecamp")) {
+    return `https://www.youtube.com/results?search_query=${q}`;
+  }
+  if (p.includes("coursera")) {
+    return `https://www.coursera.org/search?query=${q}`;
+  }
+  if (p.includes("udemy")) {
+    return `https://www.udemy.com/courses/search/?q=${q}`;
+  }
+  return `https://www.google.com/search?q=${encodeURIComponent(title + " " + platform)}`;
+}
 import type { RoadmapResponse, Milestone } from "../types";
 import { Badge } from "./ui/Badge";
 import { Button } from "./ui/Button";
@@ -140,21 +155,18 @@ function MilestoneCard({
                         className="flex items-center justify-between text-sm"
                       >
                         <div>
-                          {r.url ? (
-                            <a
-                              href={r.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-[var(--text-primary)] hover:underline flex items-center gap-1"
-                            >
-                              {r.title}
-                              <ExternalLink size={11} className="opacity-50" />
-                            </a>
-                          ) : (
-                            <span className="text-[var(--text-primary)]">
-                              {r.title}
-                            </span>
-                          )}
+                          <a
+                            href={r.url ?? searchUrl(r.title, r.platform)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[var(--text-primary)] hover:underline flex items-center gap-1"
+                          >
+                            {r.title}
+                            {r.url
+                              ? <ExternalLink size={11} className="opacity-50" />
+                              : <Search size={11} className="opacity-50" />
+                            }
+                          </a>
                           <span className="text-xs text-[var(--text-muted)] ml-1">
                             · {r.platform} · {r.cost} ·{" "}
                             {r.duration_hours}h

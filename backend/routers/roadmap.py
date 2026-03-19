@@ -15,10 +15,13 @@ Constraints:
 - Budget: {budget} (free = only free resources; paid = paid courses acceptable)
 - Skills to address: {missing_skills}
 
-Every resource MUST be real — use actual course titles, platforms, and URLs you are \
-certain exist. Every milestone MUST have a concrete, testable deliverable.
+For each resource include the best real course or resource title and its platform \
+(e.g. "Coursera", "YouTube", "Udemy", "official docs"). \
+Set "url" to null — links are generated automatically from the title and platform.
 
-Return ONLY valid JSON — no prose, no markdown fences — with this exact shape:
+Every milestone must have a concrete, testable deliverable.
+
+Return ONLY valid JSON — no prose, no markdown fences — matching this shape exactly:
 {{
   "total_weeks": 12,
   "milestones": [
@@ -29,9 +32,9 @@ Return ONLY valid JSON — no prose, no markdown fences — with this exact shap
       "skills": ["Skill1"],
       "resources": [
         {{
-          "title": "Exact course title",
+          "title": "Exact course or resource title",
           "platform": "Platform name",
-          "url": "https://real-url.com",
+          "url": null,
           "duration_hours": 6,
           "cost": "Free",
           "skills_taught": ["Skill1"]
@@ -44,10 +47,10 @@ Return ONLY valid JSON — no prose, no markdown fences — with this exact shap
 }}
 
 Rules:
-- total_weeks must reflect {hours_per_week} hrs/week — less time per week means more weeks
+- total_weeks must reflect {hours_per_week} hrs/week — less time means more weeks
 - Group related skills into the same milestone where logical
-- Each milestone covers 1–3 weeks, no more
-- Roadmap must cover ALL skills listed in missing_skills
+- Each milestone covers 1–3 weeks maximum
+- Roadmap must address ALL skills in the missing_skills list
 """
 
 
