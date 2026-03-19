@@ -11,12 +11,15 @@ Always returns a response; never raises to the caller.
 """
 
 import json
+import logging
 import os
 import re
 from typing import Any, Callable
 
 import google.generativeai as genai
 from dotenv import load_dotenv
+
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -40,7 +43,9 @@ def _clean_json(text: str) -> Any:
 
 def _call_model(model_key: str, prompt: str, temperature: float = 0.3) -> Any:
     """Call the named Gemini model and return parsed JSON. Raises on any failure."""
-    model = genai.GenerativeModel(_MODELS[model_key])
+    model_name = _MODELS[model_key]
+    logger.debug("Calling model %s (temperature=%.1f)", model_name, temperature)
+    model = genai.GenerativeModel(model_name)
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(temperature=temperature),
@@ -62,9 +67,12 @@ def call_with_fallback(
     for model_key in (primary, secondary):
         try:
             result = _call_model(model_key, prompt)
+            logger.info("Model %s succeeded", _MODELS[model_key])
             return result, False
-        except Exception:
+        except Exception as exc:
+            logger.warning("Model %s failed: %s", _MODELS[model_key], exc)
             continue
 
     # Both models failed — use the rule-based fallback
+    logger.warning("All models failed; using rule-based fallback (%s)", rule_fallback_fn.__name__)
     return rule_fallback_fn(**kwargs), True

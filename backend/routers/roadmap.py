@@ -1,6 +1,10 @@
+import logging
+
 from fastapi import APIRouter, Request
 
 from limiter import limiter
+
+logger = logging.getLogger(__name__)
 from models.schemas import RoadmapRequest, RoadmapResponse
 from services.fallback import roadmap_fallback
 from services.gemini import call_with_fallback
@@ -60,6 +64,7 @@ Rules:
 async def generate_roadmap(request: Request, req: RoadmapRequest):
     """Generate a personalised week-by-week learning roadmap."""
     if not req.missing_skills:
+        logger.info("Roadmap skipped: no missing skills for role=%r", req.target_role)
         return RoadmapResponse(
             total_weeks=0,
             milestones=[],
@@ -70,6 +75,10 @@ async def generate_roadmap(request: Request, req: RoadmapRequest):
     target_role = sanitize_text(req.target_role, max_length=100)
     # Sanitize each skill name (max 60 chars each)
     missing_skills = [sanitize_text(s, max_length=60) for s in req.missing_skills]
+    logger.info(
+        "Roadmap generation: role=%r skills=%d hours/week=%s",
+        target_role, len(missing_skills), req.available_hours_per_week,
+    )
 
     prompt = _ROADMAP_PROMPT.format(
         target_role=target_role,
@@ -86,4 +95,8 @@ async def generate_roadmap(request: Request, req: RoadmapRequest):
     )
 
     result.pop("used_fallback", None)
+    logger.info(
+        "Roadmap done: role=%r weeks=%s milestones=%d fallback=%s",
+        target_role, result.get("total_weeks"), len(result.get("milestones", [])), used_fallback,
+    )
     return RoadmapResponse(**result, used_fallback=used_fallback)

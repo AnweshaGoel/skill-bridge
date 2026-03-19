@@ -1,6 +1,10 @@
+import logging
+
 from fastapi import APIRouter, Request
 
 from limiter import limiter
+
+logger = logging.getLogger(__name__)
 from models.schemas import GapAnalysisRequest, GapAnalysisResponse
 from services.fallback import gap_analysis_fallback
 from services.gemini import call_with_fallback
@@ -53,6 +57,7 @@ async def gap_analysis(request: Request, req: GapAnalysisRequest):
     """Compare resume skills against a target role and return a scored gap analysis."""
     resume_text = sanitize_text(req.resume_text, max_length=8000)
     target_role = sanitize_text(req.target_role, max_length=100)
+    logger.info("Gap analysis: role=%r experience=%s", target_role, req.experience_level)
     prompt = _GAP_PROMPT.format(
         target_role=target_role,
         experience_level=req.experience_level,
@@ -69,4 +74,10 @@ async def gap_analysis(request: Request, req: GapAnalysisRequest):
 
     result.pop("used_fallback", None)
     result["target_role"] = target_role  # router owns this field; AI doesn't need to echo it
+    skill_count = len(result.get("skills", []))
+    missing_count = sum(1 for s in result.get("skills", []) if s.get("status") == "missing")
+    logger.info(
+        "Gap analysis done: role=%r score=%s skills=%d missing=%d fallback=%s",
+        target_role, result.get("match_score"), skill_count, missing_count, used_fallback,
+    )
     return GapAnalysisResponse(**result, used_fallback=used_fallback)

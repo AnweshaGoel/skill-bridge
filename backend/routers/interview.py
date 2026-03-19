@@ -1,6 +1,10 @@
+import logging
+
 from fastapi import APIRouter, Request
 
 from limiter import limiter
+
+logger = logging.getLogger(__name__)
 from models.schemas import InterviewRequest, InterviewResponse
 from services.fallback import interview_fallback
 from services.gemini import call_with_fallback
@@ -88,7 +92,12 @@ async def get_questions(request: Request, req: InterviewRequest):
     target_role = sanitize_text(req.target_role, max_length=100)
     missing_skills = [sanitize_text(s, max_length=60) for s in req.missing_skills]
 
-    prompt_template = _TECHNICAL_PROMPT if _is_technical(target_role) else _GENERAL_PROMPT
+    is_tech = _is_technical(target_role)
+    prompt_template = _TECHNICAL_PROMPT if is_tech else _GENERAL_PROMPT
+    logger.info(
+        "Interview questions: role=%r type=%s skills=%d experience=%s",
+        target_role, "technical" if is_tech else "general", len(missing_skills), req.experience_level,
+    )
     prompt = prompt_template.format(
         experience_level=req.experience_level,
         target_role=target_role,
@@ -104,4 +113,8 @@ async def get_questions(request: Request, req: InterviewRequest):
     )
 
     result.pop("used_fallback", None)
+    logger.info(
+        "Interview questions done: role=%r count=%d fallback=%s",
+        target_role, len(result.get("questions", [])), used_fallback,
+    )
     return InterviewResponse(**result, used_fallback=used_fallback)

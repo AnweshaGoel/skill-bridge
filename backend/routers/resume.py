@@ -1,10 +1,13 @@
 import json
+import logging
 from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 
 from limiter import limiter
+
+logger = logging.getLogger(__name__)
 from models.schemas import ResumeParseResponse, Skill
 from services.fallback import extract_skills_fallback
 from services.gemini import call_with_fallback
@@ -53,12 +56,16 @@ async def parse_resume(
     """Accept a PDF upload OR pasted resume text and return extracted skills."""
     if file is not None:
         if file.content_type != "application/pdf":
+            logger.warning("Resume upload rejected: content_type=%s", file.content_type)
             raise HTTPException(status_code=400, detail="Only PDF files are accepted.")
         raw = await file.read()
         if len(raw) > _MAX_PDF_BYTES:
+            logger.warning("Resume upload rejected: size=%d bytes exceeds 5 MB limit", len(raw))
             raise HTTPException(status_code=400, detail="File exceeds the 5 MB limit.")
+        logger.info("Parsing PDF resume: size=%d bytes", len(raw))
         resume_text = extract_text_from_pdf(raw)
     elif text is not None:
+        logger.info("Parsing pasted resume text: %d chars", len(text))
         resume_text = text.strip()
     else:
         raise HTTPException(status_code=422, detail="Provide either a PDF file or resume text.")
@@ -78,6 +85,8 @@ async def parse_resume(
     )
 
     result.pop("used_fallback", None)
+    skill_count = len(result.get("skills", []))
+    logger.info("Resume parsed: %d skills extracted, fallback=%s", skill_count, used_fallback)
     return ResumeParseResponse(**result, resume_text=resume_text, used_fallback=used_fallback)
 
 
