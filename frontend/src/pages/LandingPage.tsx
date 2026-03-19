@@ -1,21 +1,53 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Upload, FileText, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "../components/ui/Button";
 import { Card } from "../components/ui/Card";
+import { ResumeUploader } from "../components/ResumeUploader";
+import { api } from "../api/client";
 
 export default function LandingPage() {
-  const [inputMode, setInputMode] = useState<"paste" | "upload">("paste");
-  const [resumeText, setResumeText] = useState("");
+  const [mode, setMode] = useState<"paste" | "upload">("paste");
+  const [text, setText] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [targetRole, setTargetRole] = useState("");
   const [experienceLevel, setExperienceLevel] = useState("mid");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const hasInput = mode === "paste" ? text.trim().length >= 50 : file !== null;
+  const canAnalyse = hasInput && targetRole.trim().length > 0;
 
-  const pasteReady = inputMode === "paste" && resumeText.trim().length >= 50;
-  const canAnalyse = targetRole.trim().length > 0 && pasteReady;
+  // Track chars remaining for paste mode hint
+  const charsLeft =
+    mode === "paste" && text.length > 0 && text.length < 50
+      ? 50 - text.length
+      : null;
 
-  function handleAnalyse() {
-    navigate("/analysis", { state: { resumeText, targetRole, experienceLevel } });
+  async function handleAnalyse() {
+    if (!canAnalyse) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const resumeData = await api.parseResume({
+        text: mode === "paste" ? text : undefined,
+        file: mode === "upload" ? (file ?? undefined) : undefined,
+      });
+      navigate("/analysis", {
+        state: {
+          resumeData,
+          resumeText: resumeData.resume_text,
+          targetRole: targetRole.trim(),
+          experienceLevel,
+        },
+      });
+    } catch (e: unknown) {
+      const detail =
+        (e as { detail?: string })?.detail ??
+        "Failed to parse resume. Please try again.";
+      setError(detail);
+      setLoading(false);
+    }
   }
 
   return (
@@ -50,47 +82,14 @@ export default function LandingPage() {
 
         {/* Input card */}
         <Card padding="lg" className="shadow-sm">
-          {/* Mode toggle */}
-          <div className="flex gap-2 mb-5">
-            {(["paste", "upload"] as const).map((mode) => (
-              <button
-                key={mode}
-                onClick={() => setInputMode(mode)}
-                className={`flex items-center gap-2 px-4 py-2 rounded-[var(--radius-md)] text-sm font-medium transition-colors ${
-                  inputMode === mode
-                    ? "bg-[var(--bg-accent)] text-[var(--bg-primary)]"
-                    : "text-[var(--text-secondary)] hover:bg-[var(--bg-secondary)]"
-                }`}
-              >
-                {mode === "paste" ? (
-                  <FileText size={14} />
-                ) : (
-                  <Upload size={14} />
-                )}
-                {mode === "paste" ? "Paste Text" : "Upload PDF"}
-              </button>
-            ))}
-          </div>
-
-          {/* Resume input */}
-          {inputMode === "paste" ? (
-            <textarea
-              value={resumeText}
-              onChange={(e) => setResumeText(e.target.value)}
-              placeholder="Paste your resume text here (minimum 50 characters)..."
-              className="w-full h-48 px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-md)] text-[var(--text-primary)] text-sm resize-none focus:outline-none focus:border-[var(--border-strong)] transition-colors placeholder:text-[var(--text-muted)]"
-            />
-          ) : (
-            <div className="flex items-center justify-center h-48 border-2 border-dashed border-[var(--border)] rounded-[var(--radius-md)] bg-[var(--bg-secondary)]">
-              <div className="text-center text-[var(--text-muted)]">
-                <Upload size={24} className="mx-auto mb-2 opacity-40" />
-                <p className="text-sm">Drag & drop your PDF, or click to browse</p>
-                <p className="text-xs mt-1 opacity-60">
-                  PDF upload activates in the next step
-                </p>
-              </div>
-            </div>
-          )}
+          <ResumeUploader
+            mode={mode}
+            onModeChange={setMode}
+            text={text}
+            onTextChange={setText}
+            file={file}
+            onFileChange={setFile}
+          />
 
           {/* Role + experience row */}
           <div className="flex gap-3 mt-4">
@@ -109,22 +108,29 @@ export default function LandingPage() {
               <option value="entry">Entry level</option>
               <option value="mid">Mid level</option>
               <option value="senior">Senior</option>
-              <option value="staff">Staff / Principal</option>
             </select>
           </div>
+
+          {/* Error */}
+          {error && (
+            <p className="mt-3 text-xs text-[var(--color-missing)]">{error}</p>
+          )}
 
           {/* CTA row */}
           <div className="mt-5 flex items-center justify-between">
             <p className="text-xs text-[var(--text-muted)]">
-              {inputMode === "paste" &&
-              resumeText.length > 0 &&
-              resumeText.length < 50
-                ? `${50 - resumeText.length} more characters needed`
+              {charsLeft !== null
+                ? `${charsLeft} more characters needed`
                 : "\u00a0"}
             </p>
-            <Button size="lg" onClick={handleAnalyse} disabled={!canAnalyse}>
-              Analyse My Skills
-              <ArrowRight size={16} />
+            <Button
+              size="lg"
+              onClick={handleAnalyse}
+              disabled={!canAnalyse || loading}
+              loading={loading}
+            >
+              {loading ? "Parsing resume…" : "Analyse My Skills"}
+              {!loading && <ArrowRight size={16} />}
             </Button>
           </div>
         </Card>
