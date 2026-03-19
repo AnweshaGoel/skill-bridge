@@ -49,7 +49,7 @@ export default function AnalysisPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-6 pt-16 pb-16">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16 pb-16">
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1 text-xs text-[var(--text-muted)] mb-6 font-mono">
         <Link to="/" className="hover:text-[var(--text-primary)]">
@@ -128,9 +128,9 @@ export default function AnalysisPage() {
             </div>
           )}
 
-          <div className="flex gap-8 items-start">
-            {/* Left 40%: chart + score */}
-            <div style={{ width: "40%" }}>
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            {/* Chart + score */}
+            <div className="w-full md:w-2/5">
               <Card padding="md">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-xl font-serif">Match Score</h3>
@@ -142,8 +142,8 @@ export default function AnalysisPage() {
               </Card>
             </div>
 
-            {/* Right 60%: grouped skill lists */}
-            <div className="flex-1 space-y-6">
+            {/* Grouped skill lists */}
+            <div className="w-full md:flex-1 space-y-6">
               {/* Missing — most prominent */}
               {gapData.skills.filter((s) => s.status === "missing").length >
                 0 && (
@@ -217,7 +217,7 @@ export default function AnalysisPage() {
           </div>
 
           {/* CTAs */}
-          <div className="flex gap-3 mt-10">
+          <div className="flex flex-col sm:flex-row gap-3 mt-10">
             <Button
               size="lg"
               onClick={() =>

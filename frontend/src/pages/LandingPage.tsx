@@ -131,13 +131,13 @@ export default function LandingPage() {
         }}
       />
 
-      <div className="relative max-w-3xl mx-auto px-6 pt-24 pb-20">
+      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20">
         {/* Hero */}
-        <section className="text-center mb-14">
+        <section className="text-center mb-10 sm:mb-14">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-[var(--border)] bg-[var(--bg-secondary)] text-[var(--text-muted)] text-xs font-mono mb-6">
             AI-powered · fallback-safe · no login required
           </div>
-          <h1 className="text-5xl md:text-6xl font-serif mb-5 leading-tight">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-serif mb-4 sm:mb-5 leading-tight">
             Find the gap.
             <br />
             <em>Close the gap.</em>
@@ -160,7 +160,7 @@ export default function LandingPage() {
           />
 
           {/* Role + experience row */}
-          <div className="flex gap-3 mt-4">
+          <div className="flex flex-col sm:flex-row gap-3 mt-4">
             <input
               type="text"
               value={targetRole}
@@ -185,7 +185,7 @@ export default function LandingPage() {
           )}
 
           {/* CTA row */}
-          <div className="mt-5 flex items-center justify-between">
+          <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
             <p className="text-xs text-[var(--text-muted)]">
               {charsLeft !== null
                 ? `${charsLeft} more characters needed`
@@ -204,7 +204,7 @@ export default function LandingPage() {
         </Card>
 
         {/* Feature cards */}
-        <div className="grid grid-cols-3 gap-4 mt-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 sm:mt-10">
           {[
             {
               label: "Skill Gap Analysis",

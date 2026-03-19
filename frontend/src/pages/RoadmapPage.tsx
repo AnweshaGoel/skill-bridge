@@ -135,41 +135,27 @@ export default function RoadmapPage() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 pb-20">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
       {/* Sticky top bar */}
       <div className="sticky top-0 z-40 bg-[var(--bg-primary)] border-b border-[var(--border)] py-3 mb-8">
-        <div className="flex items-center justify-between">
-          <nav className="flex items-center gap-1 text-xs text-[var(--text-muted)] font-mono">
-            <Link to="/" className="hover:text-[var(--text-primary)]">
+        {/* Row 1: breadcrumb + regenerate */}
+        <div className="flex items-center justify-between gap-2">
+          <nav className="flex items-center gap-1 text-xs text-[var(--text-muted)] font-mono min-w-0">
+            <Link to="/" className="hover:text-[var(--text-primary)] whitespace-nowrap">
               Home
             </Link>
-            <ChevronRight size={12} />
-            <Link to="/analysis" className="hover:text-[var(--text-primary)]">
+            <ChevronRight size={12} className="flex-shrink-0" />
+            <Link to="/analysis" className="hover:text-[var(--text-primary)] whitespace-nowrap">
               Analysis
             </Link>
-            <ChevronRight size={12} />
-            <span className="text-[var(--text-primary)]">Roadmap</span>
+            <ChevronRight size={12} className="flex-shrink-0" />
+            <span className="text-[var(--text-primary)] whitespace-nowrap">Roadmap</span>
           </nav>
-
-          {/* Hours per week */}
-          <div className="flex items-center gap-2 text-xs text-[var(--text-muted)]">
-            <label htmlFor="hours-select" className="font-mono">hrs/week</label>
-            <select
-              id="hours-select"
-              value={hoursPerWeek}
-              onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-              className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-sm)] px-1.5 py-0.5 font-mono text-[var(--text-primary)] text-xs"
-            >
-              {[5, 10, 15, 20].map((h) => (
-                <option key={h} value={h}>{h}</option>
-              ))}
-            </select>
-          </div>
 
           {/* Regenerate */}
           {confirmRegenerate ? (
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-[var(--text-muted)]">Regenerate roadmap?</span>
+            <div className="flex items-center gap-2 text-xs flex-shrink-0">
+              <span className="text-[var(--text-muted)] hidden sm:inline">Regenerate?</span>
               <button
                 onClick={() => {
                   setConfirmRegenerate(false);
@@ -192,14 +178,30 @@ export default function RoadmapPage() {
               size="sm"
               onClick={() => setConfirmRegenerate(true)}
               disabled={roadmapLoading}
+              className="flex-shrink-0"
             >
               <RefreshCw size={13} />
-              Regenerate
+              <span className="hidden sm:inline">Regenerate</span>
             </Button>
           )}
         </div>
-        <div className="mt-1">
-          <h1 className="text-lg font-serif">{state.targetRole}</h1>
+
+        {/* Row 2: role title + hrs/week */}
+        <div className="flex items-center justify-between mt-1.5 gap-2">
+          <h1 className="text-lg font-serif truncate">{state.targetRole}</h1>
+          <div className="flex items-center gap-2 text-xs text-[var(--text-muted)] flex-shrink-0">
+            <label htmlFor="hours-select" className="font-mono">hrs/week</label>
+            <select
+              id="hours-select"
+              value={hoursPerWeek}
+              onChange={(e) => setHoursPerWeek(Number(e.target.value))}
+              className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-sm)] px-1.5 py-0.5 font-mono text-[var(--text-primary)] text-xs"
+            >
+              {[5, 10, 15, 20].map((h) => (
+                <option key={h} value={h}>{h}</option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 

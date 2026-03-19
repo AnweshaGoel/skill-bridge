@@ -61,7 +61,7 @@ export function ResumeUploader({
           value={text}
           onChange={(e) => onTextChange(e.target.value)}
           placeholder="Paste your resume text here (minimum 50 characters)..."
-          className="w-full h-48 px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-md)] text-[var(--text-primary)] text-sm resize-none focus:outline-none focus:border-[var(--border-strong)] transition-colors placeholder:text-[var(--text-muted)]"
+          className="w-full h-36 sm:h-48 px-4 py-3 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-md)] text-[var(--text-primary)] text-sm resize-none focus:outline-none focus:border-[var(--border-strong)] transition-colors placeholder:text-[var(--text-muted)]"
         />
       ) : file ? (
         <div className="flex items-center gap-3 px-4 py-4 bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-md)]">
@@ -87,7 +87,7 @@ export function ResumeUploader({
         <div
           {...getRootProps()}
           className={clsx(
-            "flex items-center justify-center h-48 border-2 border-dashed rounded-[var(--radius-md)] cursor-pointer transition-colors",
+            "flex items-center justify-center h-36 sm:h-48 border-2 border-dashed rounded-[var(--radius-md)] cursor-pointer transition-colors",
             isDragActive
               ? "border-[var(--border-strong)] bg-[var(--bg-secondary)]"
               : "border-[var(--border)] bg-[var(--bg-secondary)] hover:border-[var(--border-strong)]"

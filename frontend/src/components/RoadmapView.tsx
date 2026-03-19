@@ -97,14 +97,14 @@ function MilestoneCard({
       >
         {/* Card header — always visible */}
         <button
-          className="w-full flex items-center justify-between px-5 py-4 text-left"
+          className="w-full flex items-center justify-between px-4 sm:px-5 py-4 text-left gap-3"
           onClick={() => setExpanded((e) => !e)}
         >
-          <div className="flex items-center gap-3">
-            <span className="font-mono text-xs text-[var(--text-muted)]">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <span className="font-mono text-xs text-[var(--text-muted)] flex-shrink-0">
               WK {milestone.week}
             </span>
-            <h3 className="font-serif text-base text-[var(--text-primary)]">
+            <h3 className="font-serif text-base text-[var(--text-primary)] truncate">
               {milestone.title}
             </h3>
           </div>
@@ -127,7 +127,7 @@ function MilestoneCard({
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2, ease: "easeInOut" }}
             >
-              <div className="px-5 pb-5 space-y-4 border-t border-[var(--border)]">
+              <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-4 border-t border-[var(--border)]">
                 <p className="text-sm text-[var(--text-secondary)] pt-4">
                   {milestone.description}
                 </p>
