@@ -10,8 +10,9 @@ services:
       - key: GEMINI_API_KEY
         sync: false  # set this manually in the Render dashboard
 
-  - type: static
+  - type: web
     name: skill-bridge-ui
+    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
