@@ -29,6 +29,7 @@ export default function RoadmapPage() {
   const [roadmapError, setRoadmapError] = useState<string | null>(null);
   const [interviewLoading, setInterviewLoading] = useState(false);
   const [interviewError, setInterviewError] = useState<string | null>(null);
+  const [interviewRequested, setInterviewRequested] = useState(false);
   const [confirmRegenerate, setConfirmRegenerate] = useState(false);
   const called = useRef(false);
 
@@ -97,11 +98,18 @@ export default function RoadmapPage() {
       loadRoadmap();
     }
 
-    // Interview always fetches fresh
-    loadInterview();
+    // Interview is loaded on demand — not automatically
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Scroll to interview section if navigated from "Mock Interview" CTA
+  // Auto-trigger interview if navigated from the "Mock Interview" CTA
+  useEffect(() => {
+    if (state?.scrollToInterview && !interviewRequested) {
+      setInterviewRequested(true);
+      loadInterview();
+    }
+  }, [state?.scrollToInterview]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Scroll to interview section once loaded
   useEffect(() => {
     if (state?.scrollToInterview && interviewRef.current && interview) {
       interviewRef.current.scrollIntoView({ behavior: "smooth" });
@@ -236,9 +244,27 @@ export default function RoadmapPage() {
         )}
       </section>
 
-      {/* Interview section */}
+      {/* Interview section — loaded on demand */}
       <section ref={interviewRef}>
-        {interviewLoading && (
+        {!interviewRequested && (
+          <div className="border border-[var(--border)] rounded-[var(--radius-lg)] px-6 py-8 text-center">
+            <h2 className="text-2xl font-serif mb-2">Mock Interview</h2>
+            <p className="text-sm text-[var(--text-secondary)] mb-5">
+              Generate AI-powered interview questions tailored to your skill gaps.
+            </p>
+            <Button
+              size="lg"
+              onClick={() => {
+                setInterviewRequested(true);
+                loadInterview();
+              }}
+            >
+              Generate Interview Questions
+            </Button>
+          </div>
+        )}
+
+        {interviewRequested && interviewLoading && (
           <div className="flex items-center gap-3 py-8">
             <Spinner size="md" />
             <p className="text-sm text-[var(--text-secondary)]">
@@ -247,7 +273,7 @@ export default function RoadmapPage() {
           </div>
         )}
 
-        {interviewError && !interviewLoading && (
+        {interviewRequested && interviewError && !interviewLoading && (
           <Card className="border-[var(--color-missing)] bg-[var(--color-missing-bg)] mb-6">
             <div className="flex items-start gap-3">
               <AlertTriangle
