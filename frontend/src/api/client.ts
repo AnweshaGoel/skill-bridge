@@ -22,10 +22,8 @@ async function post<T>(path: string, body: unknown): Promise<T> {
 }
 
 async function postForm<T>(path: string, form: FormData): Promise<T> {
-  const res = await fetch(`${BASE_URL}${path}`, {
-    method: "POST",
-    body: form,
-  });
+  // Do not set Content-Type — browser sets it automatically with the boundary
+  const res = await fetch(`${BASE_URL}${path}`, { method: "POST", body: form });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }));
     throw err;
@@ -35,12 +33,13 @@ async function postForm<T>(path: string, form: FormData): Promise<T> {
 
 export const api = {
   parseResume(payload: { text?: string; file?: File }): Promise<ResumeParseResponse> {
+    const form = new FormData();
     if (payload.file) {
-      const form = new FormData();
       form.append("file", payload.file);
-      return postForm<ResumeParseResponse>("/api/resume/parse", form);
+    } else if (payload.text) {
+      form.append("text", payload.text);
     }
-    return post<ResumeParseResponse>("/api/resume/parse", { text: payload.text });
+    return postForm<ResumeParseResponse>("/api/resume/parse", form);
   },
 
   gapAnalysis(payload: {
