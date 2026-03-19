@@ -74,7 +74,7 @@ async def parse_resume(
     )
 
     result.pop("used_fallback", None)
-    return ResumeParseResponse(**result, used_fallback=used_fallback)
+    return ResumeParseResponse(**result, resume_text=resume_text, used_fallback=used_fallback)
 
 
 @router.get("/samples")

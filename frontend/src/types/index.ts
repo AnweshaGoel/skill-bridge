@@ -12,6 +12,7 @@ export interface ResumeParseResponse {
   years_experience: number | null;
   education_level: string | null;
   raw_summary: string;
+  resume_text: string;
   used_fallback: boolean;
 }
 

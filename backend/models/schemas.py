@@ -27,6 +27,7 @@ class ResumeParseResponse(BaseModel):
     years_experience: Optional[int] = Field(default=None, ge=0, le=60)
     education_level: Optional[str] = None
     raw_summary: str
+    resume_text: str  # full extracted text, passed downstream to gap analysis
     used_fallback: bool
 
 
