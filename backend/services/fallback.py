@@ -5,6 +5,7 @@ Used when the Gemini API is unavailable or returns an error.
 
 # Maps skill name → lowercase substrings that indicate the skill is present
 SKILL_KEYWORDS: dict[str, list[str]] = {
+    # Technical — engineering
     "Python": ["python"],
     "JavaScript": ["javascript", " js ", "node.js", "nodejs", "react", "vue", "angular"],
     "TypeScript": ["typescript", ".tsx", ".ts "],
@@ -20,10 +21,31 @@ SKILL_KEYWORDS: dict[str, list[str]] = {
     "CI/CD": ["ci/cd", "github actions", "jenkins", "gitlab ci", "circleci", "travis", "continuous integration", "continuous deploy", "pipeline"],
     "Terraform": ["terraform", "infrastructure as code", " iac", "hashicorp"],
     "Networking": ["networking", "tcp/ip", "dns", "vpc", "subnet", "firewall", "load balanc", "cdn", "http/https"],
+    # Data & analytics
+    "Data Analysis": ["data analysis", "data analyst", "pandas", "numpy", "excel", "spreadsheet", "pivot table", "tableau", "power bi", "looker"],
+    "Statistics": ["statistics", "statistical", "regression", "hypothesis", "a/b test", "probability", "r language", "spss", "stata"],
+    "Data Visualisation": ["data visual", "tableau", "power bi", "looker", "matplotlib", "seaborn", "d3.js", "chart", "dashboard"],
+    # Product & design
+    "Product Management": ["product manager", "product management", "roadmap", "sprint", "backlog", "user story", "okr", "kpi", "stakeholder"],
+    "UX Design": ["ux", "user experience", "figma", "sketch", "wireframe", "prototype", "usability", "user research", "persona"],
+    "UI Design": ["ui design", "user interface", "figma", "adobe xd", "design system", "typography", "colour theory"],
+    # Business & operations
+    "Project Management": ["project management", "pmp", "agile", "scrum", "kanban", "jira", "confluence", "prince2", "waterfall"],
+    "Communication": ["communication", "presentation", "public speak", "stakeholder", "report writing", "documentation"],
+    "Leadership": ["leadership", "led a team", "managed a team", "mentored", "line management", "team lead"],
+    "Excel / Spreadsheets": ["excel", "google sheets", "spreadsheet", "vlookup", "pivot"],
+    # Marketing & sales
+    "Digital Marketing": ["digital marketing", "seo", "sem", "google ads", "facebook ads", "social media marketing", "content marketing"],
+    "SEO": ["seo", "search engine optimis", "keyword research", "backlink", "google search console"],
+    "Copywriting": ["copywriting", "copy writing", "content writing", "blog", "technical writing"],
+    # Finance
+    "Financial Modelling": ["financial model", "dcf", "financial analysis", "valuation", "excel model", "fp&a"],
+    "Accounting": ["accounting", "bookkeeping", "gaap", "ifrs", "quickbooks", "accounts payable", "accounts receivable"],
 }
 
 # Maps lowercase role name → required skill names (keys from SKILL_KEYWORDS)
 ROLE_REQUIREMENTS: dict[str, list[str]] = {
+    # Engineering
     "cloud engineer": ["AWS", "GCP", "Kubernetes", "Docker", "Terraform", "Linux", "Networking", "CI/CD", "Python", "Git"],
     "backend engineer": ["Python", "SQL", "REST APIs", "Docker", "Git", "Linux", "CI/CD"],
     "frontend engineer": ["JavaScript", "TypeScript", "Git", "REST APIs"],
@@ -32,6 +54,26 @@ ROLE_REQUIREMENTS: dict[str, list[str]] = {
     "devops engineer": ["Docker", "Kubernetes", "CI/CD", "Linux", "AWS", "Terraform", "Git", "Networking", "Python"],
     "ml engineer": ["Python", "Machine Learning", "Docker", "REST APIs", "Git", "SQL", "Linux", "CI/CD"],
     "software engineer": ["Python", "SQL", "Git", "REST APIs", "Docker", "Linux"],
+    # Data & analytics
+    "data analyst": ["SQL", "Data Analysis", "Statistics", "Data Visualisation", "Python", "Excel / Spreadsheets"],
+    "data scientist": ["Python", "Machine Learning", "Statistics", "SQL", "Data Visualisation", "Git"],
+    "business analyst": ["Data Analysis", "SQL", "Excel / Spreadsheets", "Communication", "Project Management", "Data Visualisation"],
+    # Product & design
+    "product manager": ["Product Management", "Communication", "Data Analysis", "Project Management", "Leadership"],
+    "ux designer": ["UX Design", "UI Design", "Communication", "Data Analysis"],
+    "ui designer": ["UI Design", "UX Design", "Communication"],
+    # Business & operations
+    "project manager": ["Project Management", "Communication", "Leadership", "Excel / Spreadsheets"],
+    "operations manager": ["Project Management", "Communication", "Leadership", "Data Analysis", "Excel / Spreadsheets"],
+    # Marketing
+    "digital marketer": ["Digital Marketing", "SEO", "Data Analysis", "Copywriting", "Excel / Spreadsheets"],
+    "content writer": ["Copywriting", "SEO", "Communication"],
+    "seo specialist": ["SEO", "Digital Marketing", "Data Analysis", "Copywriting"],
+    # Finance
+    "financial analyst": ["Financial Modelling", "Excel / Spreadsheets", "Accounting", "Statistics", "Communication"],
+    "accountant": ["Accounting", "Excel / Spreadsheets", "Financial Modelling"],
+    # Generic fallback for unknown roles
+    "_generic": ["Communication", "Project Management", "Data Analysis", "Excel / Spreadsheets", "Leadership"],
 }
 
 _BEHAVIORAL_QUESTIONS = [
@@ -96,8 +138,7 @@ def gap_analysis_fallback(resume_text: str, target_role: str) -> dict:
             requirements = required
             break
     if not requirements:
-        # Unknown role — use generic software engineer requirements
-        requirements = ROLE_REQUIREMENTS["software engineer"]
+        requirements = ROLE_REQUIREMENTS["_generic"]
 
     skill_gaps = []
     for skill in requirements:
