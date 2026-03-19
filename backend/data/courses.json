@@ -268,5 +268,275 @@
     "duration_hours": 4,
     "cost": "Free",
     "skills_taught": ["SQL", "PostgreSQL", "Indexes", "Transactions", "Stored Procedures", "Performance Tuning", "Joins", "Window Functions"]
+  },
+  {
+    "id": "course_031",
+    "title": "Redis — Getting Started",
+    "platform": "Redis Docs",
+    "url": "https://redis.io/docs/latest/get-started/",
+    "duration_hours": 3,
+    "cost": "Free",
+    "skills_taught": ["Redis", "Caching", "Key-Value Store", "Pub/Sub", "Streams", "Session Management", "Rate Limiting"]
+  },
+  {
+    "id": "course_032",
+    "title": "Introduction to MongoDB",
+    "platform": "MongoDB University",
+    "url": "https://learn.mongodb.com/learning-paths/introduction-to-mongodb",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["MongoDB", "NoSQL", "Documents", "Aggregation", "Indexes", "Atlas", "CRUD Operations"]
+  },
+  {
+    "id": "course_033",
+    "title": "GraphQL — Official Learn Guide",
+    "platform": "GraphQL.org",
+    "url": "https://graphql.org/learn/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["GraphQL", "Queries", "Mutations", "Subscriptions", "Schema", "Resolvers", "Apollo"]
+  },
+  {
+    "id": "course_034",
+    "title": "Next.js — Official Learn Course",
+    "platform": "Next.js",
+    "url": "https://nextjs.org/learn",
+    "duration_hours": 10,
+    "cost": "Free",
+    "skills_taught": ["Next.js", "React", "Server-Side Rendering", "Static Generation", "App Router", "API Routes", "TypeScript"]
+  },
+  {
+    "id": "course_035",
+    "title": "Express.js — Getting Started",
+    "platform": "Express.js Docs",
+    "url": "https://expressjs.com/en/starter/hello-world.html",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Node.js", "Express", "REST APIs", "Middleware", "Routing", "Authentication", "Error Handling"]
+  },
+  {
+    "id": "course_036",
+    "title": "Vue.js — Official Tutorial",
+    "platform": "Vue.js",
+    "url": "https://vuejs.org/tutorial/",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Vue.js", "Composition API", "Reactivity", "Components", "Directives", "State Management", "Vue Router"]
+  },
+  {
+    "id": "course_037",
+    "title": "Prometheus — Getting Started",
+    "platform": "Prometheus Docs",
+    "url": "https://prometheus.io/docs/introduction/overview/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Prometheus", "Monitoring", "Metrics", "PromQL", "Alerting", "Grafana", "Observability"]
+  },
+  {
+    "id": "course_038",
+    "title": "Apache Kafka — Official Documentation",
+    "platform": "Apache Kafka",
+    "url": "https://kafka.apache.org/documentation/",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["Kafka", "Event Streaming", "Producers", "Consumers", "Topics", "Partitions", "Kafka Streams", "Message Queues"]
+  },
+  {
+    "id": "course_039",
+    "title": "A Tour of Go",
+    "platform": "Go.dev",
+    "url": "https://go.dev/tour/welcome/1",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Go", "Goroutines", "Channels", "Interfaces", "Error Handling", "Concurrency", "Structs", "Packages"]
+  },
+  {
+    "id": "course_040",
+    "title": "Microsoft Azure Fundamentals (AZ-900)",
+    "platform": "Microsoft Learn",
+    "url": "https://learn.microsoft.com/en-us/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/",
+    "duration_hours": 10,
+    "cost": "Free",
+    "skills_taught": ["Azure", "Cloud Computing", "Azure Services", "Networking", "Storage", "Security", "Pricing", "IAM"]
+  },
+  {
+    "id": "course_041",
+    "title": "Flask Official Tutorial — Flaskr",
+    "platform": "Flask Docs",
+    "url": "https://flask.palletsprojects.com/en/stable/tutorial/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Python", "Flask", "Web Development", "Blueprints", "SQLite", "Templates", "Authentication", "Testing"]
+  },
+  {
+    "id": "course_042",
+    "title": "Django Official Tutorial",
+    "platform": "Django Docs",
+    "url": "https://docs.djangoproject.com/en/stable/intro/tutorial01/",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["Python", "Django", "ORM", "Admin", "Templates", "Views", "URLs", "Forms", "REST APIs"]
+  },
+  {
+    "id": "course_043",
+    "title": "Pandas — Kaggle Learn",
+    "platform": "Kaggle Learn",
+    "url": "https://www.kaggle.com/learn/pandas",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Pandas", "DataFrames", "Data Cleaning", "Grouping", "Merging", "Data Analysis", "Python"]
+  },
+  {
+    "id": "course_044",
+    "title": "NumPy — Official Learn Guide",
+    "platform": "NumPy.org",
+    "url": "https://numpy.org/learn/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["NumPy", "Arrays", "Linear Algebra", "Broadcasting", "Data Manipulation", "Scientific Computing", "Python"]
+  },
+  {
+    "id": "course_045",
+    "title": "Ansible — Getting Started",
+    "platform": "Ansible Docs",
+    "url": "https://docs.ansible.com/ansible/latest/getting_started/index.html",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Ansible", "Configuration Management", "Playbooks", "Roles", "Inventory", "Automation", "Infrastructure as Code"]
+  },
+  {
+    "id": "course_046",
+    "title": "Apache Spark — Quick Start",
+    "platform": "Apache Spark Docs",
+    "url": "https://spark.apache.org/docs/latest/quick-start.html",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Apache Spark", "Big Data", "RDDs", "DataFrames", "Spark SQL", "Streaming", "PySpark", "Distributed Computing"]
+  },
+  {
+    "id": "course_047",
+    "title": "Apache Airflow — Official Tutorial",
+    "platform": "Apache Airflow Docs",
+    "url": "https://airflow.apache.org/docs/apache-airflow/stable/tutorial/index.html",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Airflow", "DAGs", "Task Orchestration", "Data Pipelines", "Scheduling", "ETL", "Python", "Operators"]
+  },
+  {
+    "id": "course_048",
+    "title": "dbt Fundamentals",
+    "platform": "dbt Learn",
+    "url": "https://courses.getdbt.com/courses/fundamentals",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["dbt", "Data Transformation", "SQL", "Data Modelling", "Testing", "Documentation", "Analytics Engineering"]
+  },
+  {
+    "id": "course_049",
+    "title": "React Native — Official Getting Started",
+    "platform": "React Native Docs",
+    "url": "https://reactnative.dev/docs/getting-started",
+    "duration_hours": 8,
+    "cost": "Free",
+    "skills_taught": ["React Native", "Mobile Development", "iOS", "Android", "Components", "Navigation", "Native APIs"]
+  },
+  {
+    "id": "course_050",
+    "title": "gRPC — Introduction",
+    "platform": "gRPC Docs",
+    "url": "https://grpc.io/docs/what-is-grpc/introduction/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["gRPC", "Protocol Buffers", "Microservices", "Streaming", "RPC", "Service Definition", "Client-Server"]
+  },
+  {
+    "id": "course_051",
+    "title": "System Design Primer",
+    "platform": "GitHub (donnemartin)",
+    "url": "https://github.com/donnemartin/system-design-primer",
+    "duration_hours": 20,
+    "cost": "Free",
+    "skills_taught": ["System Design", "Scalability", "Load Balancing", "Caching", "Databases", "Microservices", "CAP Theorem", "Rate Limiting"]
+  },
+  {
+    "id": "course_052",
+    "title": "OWASP Top Ten",
+    "platform": "OWASP",
+    "url": "https://owasp.org/www-project-top-ten/",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["Security", "OWASP", "SQL Injection", "XSS", "Authentication Flaws", "Cryptography", "Secure Coding"]
+  },
+  {
+    "id": "course_053",
+    "title": "The Rust Programming Language (The Book)",
+    "platform": "Rust Docs",
+    "url": "https://doc.rust-lang.org/book/",
+    "duration_hours": 30,
+    "cost": "Free",
+    "skills_taught": ["Rust", "Ownership", "Borrowing", "Lifetimes", "Concurrency", "Error Handling", "Systems Programming"]
+  },
+  {
+    "id": "course_054",
+    "title": "Elasticsearch — Getting Started",
+    "platform": "Elastic Docs",
+    "url": "https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html",
+    "duration_hours": 5,
+    "cost": "Free",
+    "skills_taught": ["Elasticsearch", "Search", "Indexing", "Queries", "Aggregations", "Kibana", "ELK Stack", "Full-Text Search"]
+  },
+  {
+    "id": "course_055",
+    "title": "MLflow — Getting Started",
+    "platform": "MLflow Docs",
+    "url": "https://mlflow.org/docs/latest/getting-started/index.html",
+    "duration_hours": 4,
+    "cost": "Free",
+    "skills_taught": ["MLflow", "Experiment Tracking", "Model Registry", "Model Serving", "MLOps", "Python", "Logging Metrics"]
+  },
+  {
+    "id": "course_056",
+    "title": "Helm — Quickstart Guide",
+    "platform": "Helm Docs",
+    "url": "https://helm.sh/docs/intro/quickstart/",
+    "duration_hours": 3,
+    "cost": "Free",
+    "skills_taught": ["Helm", "Kubernetes", "Charts", "Package Management", "Releases", "Templates", "Repositories"]
+  },
+  {
+    "id": "course_057",
+    "title": "OAuth 2.0 — Overview and Flows",
+    "platform": "OAuth.net",
+    "url": "https://oauth.net/2/",
+    "duration_hours": 3,
+    "cost": "Free",
+    "skills_taught": ["OAuth 2.0", "Authentication", "Authorization", "JWT", "OpenID Connect", "Access Tokens", "Security"]
+  },
+  {
+    "id": "course_058",
+    "title": "Svelte — Official Interactive Tutorial",
+    "platform": "Svelte",
+    "url": "https://learn.svelte.dev/tutorial/welcome-to-svelte",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Svelte", "Reactivity", "Components", "State Management", "Stores", "Animations", "SvelteKit"]
+  },
+  {
+    "id": "course_059",
+    "title": "OpenAPI Specification — Guide",
+    "platform": "Swagger Docs",
+    "url": "https://swagger.io/docs/specification/about/",
+    "duration_hours": 3,
+    "cost": "Free",
+    "skills_taught": ["OpenAPI", "Swagger", "API Design", "REST APIs", "Documentation", "API Contracts", "YAML"]
+  },
+  {
+    "id": "course_060",
+    "title": "Spring Boot — Getting Started Guide",
+    "platform": "Spring.io",
+    "url": "https://spring.io/guides/gs/spring-boot",
+    "duration_hours": 6,
+    "cost": "Free",
+    "skills_taught": ["Java", "Spring Boot", "REST APIs", "Dependency Injection", "JPA", "Spring Security", "Microservices"]
   }
 ]
