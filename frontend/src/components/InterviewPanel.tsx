@@ -12,19 +12,22 @@ interface InterviewPanelProps {
   regenerating: boolean;
 }
 
-const CATEGORY_LABEL: Record<string, string> = {
-  technical: "Technical",
-  behavioral: "Behavioral",
-  "system-design": "System Design",
-};
-
 const DIFFICULTY_VARIANT: Record<string, "present" | "partial" | "missing"> = {
   easy: "present",
   medium: "partial",
   hard: "missing",
 };
 
-function QuestionAccordion({ q }: { q: InterviewQuestion }) {
+type DifficultyFilter = "all" | "easy" | "medium" | "hard";
+
+const DIFFICULTY_FILTERS: { value: DifficultyFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
+];
+
+function QuestionAccordion({ q, index }: { q: InterviewQuestion; index: number }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -33,6 +36,9 @@ function QuestionAccordion({ q }: { q: InterviewQuestion }) {
         className="w-full flex items-start gap-3 px-4 py-3 text-left hover:bg-[var(--bg-secondary)] transition-colors"
         onClick={() => setOpen((o) => !o)}
       >
+        <span className="font-mono text-xs text-[var(--text-muted)] flex-shrink-0 mt-0.5 w-5">
+          {index + 1}.
+        </span>
         <ChevronDown
           size={15}
           className={clsx(
@@ -70,17 +76,20 @@ export function InterviewPanel({
   onRegenerate,
   regenerating,
 }: InterviewPanelProps) {
-  const categories = ["technical", "system-design", "behavioral"] as const;
+  const [difficulty, setDifficulty] = useState<DifficultyFilter>("all");
+
+  const filtered =
+    difficulty === "all"
+      ? interview.questions
+      : interview.questions.filter((q) => q.difficulty === difficulty);
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <h2 className="text-2xl font-serif">Mock Interview</h2>
           <p className="text-sm text-[var(--text-secondary)] mt-1">
-            {interview.questions.length} questions across{" "}
-            {new Set(interview.questions.map((q) => q.category)).size}{" "}
-            categories
+            {interview.questions.length} questions
           </p>
         </div>
         <Button
@@ -90,11 +99,7 @@ export function InterviewPanel({
           loading={regenerating}
           disabled={regenerating}
         >
-          {regenerating ? (
-            <Spinner size="sm" />
-          ) : (
-            <RefreshCw size={14} />
-          )}
+          {regenerating ? <Spinner size="sm" /> : <RefreshCw size={14} />}
           Regenerate
         </Button>
       </div>
@@ -106,24 +111,40 @@ export function InterviewPanel({
         </div>
       )}
 
-      <div className="space-y-6">
-        {categories.map((cat) => {
-          const qs = interview.questions.filter((q) => q.category === cat);
-          if (qs.length === 0) return null;
-          return (
-            <div key={cat}>
-              <h3 className="text-sm font-medium text-[var(--text-muted)] uppercase tracking-wide mb-3">
-                {CATEGORY_LABEL[cat]}
-              </h3>
-              <div className="space-y-2">
-                {qs.map((q, i) => (
-                  <QuestionAccordion key={i} q={q} />
-                ))}
-              </div>
-            </div>
-          );
-        })}
+      {/* Difficulty filter */}
+      <div className="flex gap-2 mb-5">
+        {DIFFICULTY_FILTERS.map(({ value, label }) => (
+          <button
+            key={value}
+            onClick={() => setDifficulty(value)}
+            className={clsx(
+              "px-3 py-1 rounded-full text-xs font-mono border transition-colors",
+              difficulty === value
+                ? "bg-[var(--bg-accent)] text-[var(--bg-primary)] border-[var(--bg-accent)]"
+                : "bg-transparent text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--border-strong)]"
+            )}
+          >
+            {label}
+            {value !== "all" && (
+              <span className="ml-1 opacity-60">
+                ({interview.questions.filter((q) => q.difficulty === value).length})
+              </span>
+            )}
+          </button>
+        ))}
       </div>
+
+      {filtered.length === 0 ? (
+        <p className="text-sm text-[var(--text-muted)] text-center py-8">
+          No {difficulty} questions in this set.
+        </p>
+      ) : (
+        <div className="space-y-2">
+          {filtered.map((q, i) => (
+            <QuestionAccordion key={i} q={q} index={i} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
