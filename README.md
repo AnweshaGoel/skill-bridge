@@ -9,8 +9,8 @@
 
 
 ## Demo
-
-[Live App](https://skill-bridge-ui.onrender.com) | [Watch the demo on Vimeo](https://vimeo.com/1175458112)
+[Watch the demo on Vimeo](https://vimeo.com/1175458112)
+[Live App](https://skill-bridge-ui.onrender.com) 
 
 ## Quick Start
 
@@ -63,7 +63,6 @@ cd frontend && npm run test
 - No user authentication (out of scope for demo)
 - No persistent database (JSON flat files only)
 - PDF rendering preview removed (text extraction kept)
-- [fill in others]
 
 ### What would be built next?
 - PostgreSQL persistence for saved roadmaps
