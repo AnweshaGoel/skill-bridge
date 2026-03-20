@@ -29,10 +29,9 @@ Generate mock interview questions for a {experience_level}-level {target_role} c
 
 Skills to probe (the candidate is weak in these): {missing_skills}
 
-Question mix — produce EXACTLY:
-- 4 technical questions (test depth of knowledge in the missing skills)
-- 3 behavioral questions (STAR-format situations; role-relevant)
-- 3 system-design questions (architecture, scalability, trade-offs)
+Question mix — produce EXACTLY 10 questions:
+- 6 technical questions covering the full role skill set, with heavier focus on the listed gaps
+- 4 behavioral questions (STAR-format situations; role-relevant)
 
 Be specific and probing, not generic. Avoid "What is X?" — \
 ask scenario-based questions like "Your container image is 3 GB and CI pulls \
@@ -51,7 +50,7 @@ Return ONLY valid JSON — no prose, no markdown fences — with this exact shap
   ]
 }}
 
-category must be exactly one of: "technical", "behavioral", "system-design"
+category must be exactly one of: "technical", "behavioral"
 """
 
 _GENERAL_PROMPT = """\
@@ -60,9 +59,9 @@ Generate mock interview questions for a {experience_level}-level {target_role} c
 
 Areas where the candidate has gaps: {missing_skills}
 
-Question mix — produce EXACTLY:
-- 5 role-specific knowledge questions (probe core {target_role} concepts and the gaps above)
-- 5 behavioral questions (STAR-format; probe leadership, communication, \
+Question mix — produce EXACTLY 10 questions:
+- 6 role-specific knowledge questions covering the full {target_role} skill set, with heavier focus on the listed gaps
+- 4 behavioral questions (STAR-format; probe leadership, communication, \
   prioritisation, stakeholder management, and handling failure)
 
 Be specific and situational — tailor every question to the {target_role} context.
