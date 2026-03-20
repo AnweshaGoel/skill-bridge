@@ -3,6 +3,46 @@ Rule-based fallback — keyword matching with zero network calls.
 Used when the Gemini API is unavailable or returns an error.
 """
 
+import json
+from pathlib import Path
+
+_DATA_DIR = Path(__file__).parent.parent / "data"
+
+
+def _load_courses() -> list:
+    try:
+        return json.loads((_DATA_DIR / "courses.json").read_text(encoding="utf-8"))
+    except Exception:
+        return []
+
+
+def _load_job_descriptions() -> list:
+    try:
+        return json.loads((_DATA_DIR / "job_descriptions.json").read_text(encoding="utf-8"))
+    except Exception:
+        return []
+
+
+def _courses_for_skill(skill: str, courses: list) -> list:
+    """Return up to 2 courses from the catalog that teach the given skill."""
+    skill_lower = skill.lower()
+    matches = []
+    for course in courses:
+        taught_lower = [s.lower() for s in course.get("skills_taught", [])]
+        if any(skill_lower in t or t in skill_lower for t in taught_lower):
+            matches.append({
+                "title": course["title"],
+                "platform": course["platform"],
+                "url": course["url"],
+                "duration_hours": course["duration_hours"],
+                "cost": course["cost"],
+                "skills_taught": course["skills_taught"],
+            })
+        if len(matches) >= 2:
+            break
+    return matches
+
+
 # Maps skill name → lowercase substrings that indicate the skill is present
 SKILL_KEYWORDS: dict[str, list[str]] = {
     # Technical — engineering
@@ -92,11 +132,18 @@ _BEHAVIORAL_QUESTIONS = [
         "difficulty": "easy",
     },
     {
-        "question": "You need to design a system that must handle 10× its current load within three months. Walk me through how you would approach the architecture decision and the trade-offs involved.",
-        "category": "system-design",
-        "skill_tested": "scalability",
-        "hint": "Consider horizontal vs vertical scaling, caching, database sharding, and async processing.",
-        "difficulty": "hard",
+        "question": "Give an example of a time you had to collaborate with a team member whose working style was very different from yours. How did you handle it?",
+        "category": "behavioral",
+        "skill_tested": "collaboration",
+        "hint": None,
+        "difficulty": "medium",
+    },
+    {
+        "question": "Describe a situation where you had to prioritise competing deadlines. How did you decide what to work on first, and what was the outcome?",
+        "category": "behavioral",
+        "skill_tested": "prioritisation",
+        "hint": None,
+        "difficulty": "medium",
     },
 ]
 
@@ -130,13 +177,18 @@ def gap_analysis_fallback(resume_text: str, target_role: str) -> dict:
     parsed = extract_skills_fallback(resume_text)
     found_skills = {s["name"] for s in parsed["skills"]}
 
-    # Fuzzy-match role to ROLE_REQUIREMENTS by substring
+    # Try job_descriptions.json first, then fall back to hardcoded ROLE_REQUIREMENTS
     role_lower = target_role.lower()
     requirements: list[str] = []
-    for role_key, required in ROLE_REQUIREMENTS.items():
-        if role_key in role_lower or role_lower in role_key:
-            requirements = required
+    for jd in _load_job_descriptions():
+        if jd["role"].lower() in role_lower or role_lower in jd["role"].lower():
+            requirements = jd["required_skills"]
             break
+    if not requirements:
+        for role_key, required in ROLE_REQUIREMENTS.items():
+            if role_key in role_lower or role_lower in role_key:
+                requirements = required
+                break
     if not requirements:
         requirements = ROLE_REQUIREMENTS["_generic"]
 
@@ -172,22 +224,26 @@ def gap_analysis_fallback(resume_text: str, target_role: str) -> dict:
 def roadmap_fallback(target_role: str, missing_skills: list) -> dict:
     """Generate a simple milestone per missing skill (max 6, 2 weeks each)."""
     capped = missing_skills[:6]
+    courses = _load_courses()
     milestones = []
     for i, skill in enumerate(capped):
         week = i * 2 + 1
+        resources = _courses_for_skill(skill, courses)
+        if not resources:
+            resources = [{
+                "title": f"{skill} — full course",
+                "platform": "YouTube",
+                "url": f"https://www.youtube.com/results?search_query={skill.replace(' ', '+')}+full+course",
+                "duration_hours": 6,
+                "cost": "Free",
+                "skills_taught": [skill],
+            }]
         milestones.append({
             "week": week,
             "title": f"Learn {skill}",
             "description": f"Build foundational knowledge of {skill} through official docs and hands-on practice.",
             "skills": [skill],
-            "resources": [{
-                "title": f"{skill} — freeCodeCamp full course",
-                "platform": "YouTube (freeCodeCamp)",
-                "url": f"https://www.youtube.com/results?search_query={skill.replace(' ', '+')}+full+course+freecodecamp",
-                "duration_hours": 6,
-                "cost": "Free",
-                "skills_taught": [skill],
-            }],
+            "resources": resources,
             "deliverable": f"Complete a small project demonstrating {skill} and push it to GitHub.",
         })
 
@@ -203,15 +259,25 @@ def roadmap_fallback(target_role: str, missing_skills: list) -> dict:
 
 
 def interview_fallback(target_role: str, missing_skills: list) -> dict:
-    """One technical question per missing skill (max 5) + 3 fixed behavioral/system-design."""
+    """6 technical questions (gap-focused) + 4 fixed behavioral questions."""
     technical = []
-    for skill in missing_skills[:5]:
+    # Fill up to 6 technical questions; prioritise missing skills then pad with generic role questions
+    for skill in missing_skills[:6]:
         technical.append({
-            "question": f"Explain {skill} in your own words and walk me through how you would use it in a real {target_role} project.",
+            "question": f"Walk me through how you would apply {skill} in a real {target_role} project. What pitfalls would you watch out for?",
             "category": "technical",
             "skill_tested": skill,
-            "hint": f"Focus on the core concept of {skill} and give a concrete, specific example.",
+            "hint": f"Focus on practical use of {skill} with a concrete example and trade-offs.",
             "difficulty": "medium",
+        })
+    # Pad to 6 if fewer than 6 missing skills
+    while len(technical) < 6:
+        technical.append({
+            "question": f"Describe the most complex technical challenge you have faced in a {target_role}-type role and how you resolved it.",
+            "category": "technical",
+            "skill_tested": "general problem-solving",
+            "hint": "Structure your answer around the problem, your approach, and the outcome.",
+            "difficulty": "hard",
         })
 
     return {
