@@ -68,6 +68,7 @@ def call_with_fallback(
         try:
             result = _call_model(model_key, prompt)
             logger.info("Model %s succeeded", _MODELS[model_key])
+            logger.debug("Raw AI response: %s", json.dumps(result, indent=2))
             return result, False
         except Exception as exc:
             logger.warning("Model %s failed: %s", _MODELS[model_key], exc)
@@ -75,4 +76,6 @@ def call_with_fallback(
 
     # Both models failed — use the rule-based fallback
     logger.warning("All models failed; using rule-based fallback (%s)", rule_fallback_fn.__name__)
-    return rule_fallback_fn(**kwargs), True
+    result = rule_fallback_fn(**kwargs)
+    logger.debug("Raw fallback response: %s", json.dumps(result, indent=2))
+    return result, True
