@@ -39,20 +39,21 @@ describe("InterviewPanel", () => {
     expect(screen.getByText("Mock Interview")).toBeInTheDocument();
   });
 
-  it("shows question count and category count", () => {
+  it("shows question count", () => {
     render(
       <InterviewPanel interview={INTERVIEW} onRegenerate={vi.fn()} regenerating={false} />
     );
-    expect(screen.getByText(/3 questions across/)).toBeInTheDocument();
+    expect(screen.getByText(/3 questions/)).toBeInTheDocument();
   });
 
-  it("renders all three category headings", () => {
+  it("renders difficulty filter buttons", () => {
     render(
       <InterviewPanel interview={INTERVIEW} onRegenerate={vi.fn()} regenerating={false} />
     );
-    expect(screen.getByText("Technical")).toBeInTheDocument();
-    expect(screen.getByText("Behavioral")).toBeInTheDocument();
-    expect(screen.getByText("System Design")).toBeInTheDocument();
+    expect(screen.getByText("All")).toBeInTheDocument();
+    expect(screen.getByText("Easy")).toBeInTheDocument();
+    expect(screen.getByText("Medium")).toBeInTheDocument();
+    expect(screen.getByText("Hard")).toBeInTheDocument();
   });
 
   it("shows offline mode banner when used_fallback is true", () => {

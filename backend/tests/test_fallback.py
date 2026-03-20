@@ -116,20 +116,20 @@ def test_interview_two_skills_returns_at_least_five_questions():
     assert len(result["questions"]) >= 5
 
 
-def test_interview_includes_behavioral_and_system_design():
+def test_interview_includes_behavioral():
     result = interview_fallback("Backend Engineer", ["Python", "Docker"])
     categories = {q["category"] for q in result["questions"]}
     assert "behavioral" in categories
-    assert "system-design" in categories
+    assert "technical" in categories
 
 
-def test_interview_caps_technical_at_five():
+def test_interview_caps_technical_at_six():
     result = interview_fallback(
         target_role="DevOps Engineer",
         missing_skills=["A", "B", "C", "D", "E", "F", "G"],
     )
     technical = [q for q in result["questions"] if q["category"] == "technical"]
-    assert len(technical) <= 5
+    assert len(technical) <= 6
 
 
 def test_interview_returns_used_fallback_true():
