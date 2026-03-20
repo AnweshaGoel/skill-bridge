@@ -10,6 +10,7 @@
 
 ## Demo
 [Watch the demo on Vimeo](https://vimeo.com/1175458112)
+
 [Live App](https://skill-bridge-ui.onrender.com) 
 
 ## Quick Start
