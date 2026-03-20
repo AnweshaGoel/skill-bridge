@@ -6,7 +6,7 @@ import clsx from "clsx";
 function searchUrl(title: string, platform: string): string {
   const p = platform.toLowerCase();
   const q = encodeURIComponent(title);
-  if (p.includes("youtube") || p.includes("freecodecamp")) {
+  if (p.includes("youtube")) {
     return `https://www.youtube.com/results?search_query=${q}`;
   }
   if (p.includes("coursera")) {
@@ -102,9 +102,14 @@ function MilestoneCard({
         >
           <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <span className="font-mono text-xs text-[var(--text-muted)] flex-shrink-0">
-              WK {milestone.week}
+              Week {milestone.week}
             </span>
-            <h3 className="font-serif text-base text-[var(--text-primary)] truncate">
+            <h3
+              className={clsx(
+                "font-serif text-base truncate",
+                isCompleted ? "text-[var(--color-present)]" : "text-[var(--text-primary)]"
+              )}
+            >
               {milestone.title}
             </h3>
           </div>
@@ -168,8 +173,7 @@ function MilestoneCard({
                             }
                           </a>
                           <span className="text-xs text-[var(--text-muted)] ml-1">
-                            · {r.platform} · {r.cost} ·{" "}
-                            {r.duration_hours}h
+                            · {r.platform} · {r.cost}
                           </span>
                         </div>
                       </div>
