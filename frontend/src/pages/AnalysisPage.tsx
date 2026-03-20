@@ -1,5 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import clsx from "clsx";
 import { ChevronRight, AlertTriangle } from "lucide-react";
 import { useAnalysis } from "../hooks/useAnalysis";
 import { SkillGapChart } from "../components/SkillGapChart";
@@ -22,6 +23,8 @@ export default function AnalysisPage() {
   const state = location.state as LocationState | null;
   const { data: gapData, loading, error, run } = useAnalysis();
   const called = useRef(false);
+  type StatusFilter = "all" | "missing" | "partial" | "present";
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
 
   useEffect(() => {
     if (!state?.targetRole || called.current) return;
@@ -142,67 +145,48 @@ export default function AnalysisPage() {
               </Card>
             </div>
 
-            {/* Grouped skill lists */}
-            <div className="w-full md:flex-1 space-y-6">
-              {/* Missing — most prominent */}
-              {gapData.skills.filter((s) => s.status === "missing").length >
-                0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-[var(--color-missing)] mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[var(--color-missing)] inline-block" />
-                    Missing Skills
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {gapData.skills
-                      .filter((s) => s.status === "missing")
-                      .map((s) => (
-                        <Badge key={s.skill} variant="missing">
-                          {s.skill}
-                        </Badge>
-                      ))}
-                  </div>
-                </div>
-              )}
+            {/* Skill list with filter */}
+            <div className="w-full md:flex-1 space-y-4">
+              {/* Filter pills */}
+              <div className="flex flex-wrap gap-2">
+                {(
+                  [
+                    { value: "all", label: "All" },
+                    { value: "missing", label: "Missing" },
+                    { value: "partial", label: "Partial" },
+                    { value: "present", label: "Have" },
+                  ] as { value: StatusFilter; label: string }[]
+                ).map(({ value, label }) => (
+                  <button
+                    key={value}
+                    onClick={() => setStatusFilter(value)}
+                    className={clsx(
+                      "px-3 py-1 rounded-full text-xs font-mono border transition-colors",
+                      statusFilter === value
+                        ? "bg-[var(--bg-accent)] text-[var(--bg-primary)] border-[var(--bg-accent)]"
+                        : "bg-transparent text-[var(--text-muted)] border-[var(--border)] hover:border-[var(--border-strong)]"
+                    )}
+                  >
+                    {label}
+                    <span className="ml-1 opacity-60">
+                      ({value === "all"
+                        ? gapData.skills.length
+                        : gapData.skills.filter((s) => s.status === value).length})
+                    </span>
+                  </button>
+                ))}
+              </div>
 
-              {/* Partial */}
-              {gapData.skills.filter((s) => s.status === "partial").length >
-                0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-[var(--color-partial)] mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[var(--color-partial)] inline-block" />
-                    Partial / Basic
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {gapData.skills
-                      .filter((s) => s.status === "partial")
-                      .map((s) => (
-                        <Badge key={s.skill} variant="partial">
-                          {s.skill}
-                        </Badge>
-                      ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Present */}
-              {gapData.skills.filter((s) => s.status === "present").length >
-                0 && (
-                <div>
-                  <h3 className="text-sm font-medium text-[var(--color-present)] mb-3 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[var(--color-present)] inline-block" />
-                    Skills You Have
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {gapData.skills
-                      .filter((s) => s.status === "present")
-                      .map((s) => (
-                        <Badge key={s.skill} variant="present">
-                          {s.skill}
-                        </Badge>
-                      ))}
-                  </div>
-                </div>
-              )}
+              {/* Filtered badges */}
+              <div className="flex flex-wrap gap-2">
+                {gapData.skills
+                  .filter((s) => statusFilter === "all" || s.status === statusFilter)
+                  .map((s) => (
+                    <Badge key={s.skill} variant={s.status as "missing" | "partial" | "present"}>
+                      {s.skill}
+                    </Badge>
+                  ))}
+              </div>
 
               {/* AI summary */}
               <Card
