@@ -23,7 +23,6 @@ export default function RoadmapPage() {
   const state = location.state as LocationState | null;
   const interviewRef = useRef<HTMLDivElement>(null);
 
-  const [hoursPerWeek, setHoursPerWeek] = useState(10);
   const [roadmap, setRoadmap] = useState<RoadmapResponse | null>(null);
   const [interview, setInterview] = useState<InterviewResponse | null>(null);
   const [roadmapLoading, setRoadmapLoading] = useState(false);
@@ -42,7 +41,6 @@ export default function RoadmapPage() {
       const result = await api.generateRoadmap({
         target_role: state.targetRole,
         missing_skills: state.missingSkills,
-        available_hours_per_week: hoursPerWeek,
       });
       setRoadmap(result);
       // Persist roadmap so user can refresh without re-calling
@@ -186,22 +184,9 @@ export default function RoadmapPage() {
           )}
         </div>
 
-        {/* Row 2: role title + hrs/week */}
-        <div className="flex items-center justify-between mt-1.5 gap-2">
+        {/* Row 2: role title */}
+        <div className="mt-1.5">
           <h1 className="text-lg font-serif truncate">{state.targetRole}</h1>
-          <div className="flex items-center gap-2 text-xs text-[var(--text-muted)] flex-shrink-0">
-            <label htmlFor="hours-select" className="font-mono">hrs/week</label>
-            <select
-              id="hours-select"
-              value={hoursPerWeek}
-              onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-              className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-[var(--radius-sm)] px-1.5 py-0.5 font-mono text-[var(--text-primary)] text-xs"
-            >
-              {[5, 10, 15, 20].map((h) => (
-                <option key={h} value={h}>{h}</option>
-              ))}
-            </select>
-          </div>
         </div>
       </div>
 

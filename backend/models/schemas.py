@@ -74,8 +74,6 @@ class GapAnalysisResponse(BaseModel):
 class RoadmapRequest(BaseModel):
     target_role: str = Field(..., min_length=2, max_length=100)
     missing_skills: List[str] = Field(..., min_length=0)
-    available_hours_per_week: int = Field(default=10, ge=1, le=80)
-
     @field_validator("missing_skills")
     @classmethod
     def strip_skills(cls, v: List[str]) -> List[str]:

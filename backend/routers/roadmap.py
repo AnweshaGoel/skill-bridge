@@ -16,9 +16,7 @@ _ROADMAP_PROMPT = """\
 You are an expert learning path designer. Create a concrete, week-by-week roadmap \
 to help someone become a {target_role}.
 
-Constraints:
-- Available hours per week: {hours_per_week}
-- Skills to address: {missing_skills}
+Skills to address: {missing_skills}
 
 For each resource include the best real course or resource title and its platform \
 (e.g. "Coursera", "YouTube", "Udemy", "official docs"). \
@@ -52,7 +50,6 @@ Return ONLY valid JSON — no prose, no markdown fences — matching this shape 
 }}
 
 Rules:
-- total_weeks must reflect {hours_per_week} hrs/week — less time means more weeks
 - Group related skills into the same milestone where logical
 - Each milestone covers 1–3 weeks maximum
 - Roadmap must address ALL skills in the missing_skills list
@@ -76,13 +73,12 @@ async def generate_roadmap(request: Request, req: RoadmapRequest):
     # Sanitize each skill name (max 60 chars each)
     missing_skills = [sanitize_text(s, max_length=60) for s in req.missing_skills]
     logger.info(
-        "Roadmap generation: role=%r skills=%d hours/week=%s",
-        target_role, len(missing_skills), req.available_hours_per_week,
+        "Roadmap generation: role=%r skills=%d",
+        target_role, len(missing_skills),
     )
 
     prompt = _ROADMAP_PROMPT.format(
         target_role=target_role,
-        hours_per_week=req.available_hours_per_week,
         missing_skills=", ".join(missing_skills),
     )
     result, used_fallback = call_with_fallback(
